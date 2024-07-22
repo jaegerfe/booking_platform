@@ -14,7 +14,7 @@ export interface BookingsState {
 const initialState: BookingsState = {
     value:[]
 }
-
+// Using Moment-range to check overlaping books
 const isOverlapping = (b1: Booking, b2: Booking): boolean => {
     const range1 = rangeMoment.range(b1.startDate, b1.endDate);
     const range2 = rangeMoment.range(b2.startDate, b2.endDate);
@@ -33,6 +33,9 @@ export const bookingsSlice = createSlice({
             if (overlapingBookings.length > 0) {
                 throw Error("Error on create booking: unavailable dates")
             }
+            if (newBooking.endDate.diff(newBooking.startDate, 'days') < 1) {
+                throw Error("Error on create booking: start date and end date must be different")
+            }
             newBooking.id = id++
             newBooking.total = newBooking.endDate.diff(newBooking.startDate, 'days') * newBooking.property.price;
             state.value = [...state.value, newBooking];
@@ -47,6 +50,9 @@ export const bookingsSlice = createSlice({
                 b.property.id === updatedBooking.property.id && b.id !== updatedBooking.id && isOverlapping(b, updatedBooking))
             if (overlapingBookings.length > 0) {
                 throw Error("Error on update booking: unavailable dates")
+            }
+            if (updatedBooking.endDate.diff(updatedBooking.startDate, 'days') < 1) {
+                throw Error("Error on create booking: start date and end date must be different")
             }
             updatedBooking.total = updatedBooking.endDate.diff(updatedBooking.startDate, 'days') * updatedBooking.property.price;
             const newList = [...state.value]

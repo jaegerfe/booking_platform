@@ -18,6 +18,7 @@ type CreateEditBookingProps = {
     property: Property
 }
 
+// Using the same component to create and edit a booking
 export function CreateEditBooking({ property, booking, updatingBooking }: CreateEditBookingProps) {
     const navigate = useNavigate();
     const dispatch = useAppDispatch();
@@ -58,9 +59,8 @@ export function CreateEditBooking({ property, booking, updatingBooking }: Create
             endDate: moment(newRange?.endDate)
         }
         setBookingObj(updatedBooking)
-        console.log(updatedBooking)
-        if(newRange?.startDate && newRange.endDate) {
-            const totalDays = updatedBooking.endDate.diff(updatedBooking.startDate, 'days');
+        const totalDays = updatedBooking.endDate.diff(updatedBooking.startDate, 'days');
+        if(newRange?.startDate && newRange.endDate && totalDays !== 0) {
             setTotal(totalDays * property.price)
             setValidBooking(true)
         } else {
@@ -98,7 +98,7 @@ export function CreateEditBooking({ property, booking, updatingBooking }: Create
                 <div className="col-start-4 col-end-7 row-start-1 flex flex-col justify-between desktop:mt-40 mobile:rounded-b-lg bg-header-background text-header-color desktop:rounded-lg p-4 desktop:h-80">
                     <div className="mobile:mb-2">
                         <h2 className="text-xl font-bold mb-4">Reserve now</h2>
-                        <Datepicker primaryColor="teal" minDate={new Date()} disabledDates={unavailableDates} placeholder="Select your dates" value={range} onChange={changeRange} showShortcuts={false} />
+                        <Datepicker useRange={false} primaryColor="teal" minDate={new Date()} disabledDates={unavailableDates} placeholder="Select your dates" value={range} onChange={changeRange} showShortcuts={false} />
                         <p className="mt-8 text-end"><b>Price per night: </b>${property.price.toFixed(2)}</p>
                         <p className="mt-1 text-end"><b>Total for selected dates: </b>${total.toFixed(2)}</p>
                     </div>
