@@ -90,7 +90,7 @@ export function CreateEditBooking({ property, booking, updatingBooking }: Create
             <div className="max-w-screen-xl bg-back mt-10 mx-auto desktop:grid desktop:grid-cols-6">
                 <div className="col-start-1 col-end-5 row-start-1 ">
                     <div className="flex justify-between items-center">
-                        <h1 className="text-4xl font-bold mb-4">{property.name}</h1>
+                        <h1 data-cy="property-title" className="text-4xl font-bold mb-4">{property.name}</h1>
                         <Rating rate={property.rating} />
                     </div>
                     <img className="w-full desktop:rounded-lg mobile:rounded-t-lg" src={property.imgUrl}></img>
@@ -99,12 +99,12 @@ export function CreateEditBooking({ property, booking, updatingBooking }: Create
                     <div className="mobile:mb-2">
                         <h2 className="text-xl font-bold mb-4">{updatingBooking ? 'Update reservation' : 'Reserve now'}</h2>
                         <Datepicker useRange={false} primaryColor="teal" minDate={new Date()} disabledDates={unavailableDates} placeholder="Select your dates" value={range} onChange={changeRange} showShortcuts={false} />
-                        <p className="mt-8 text-end"><b>Price per night: </b>${property.price.toFixed(2)}</p>
-                        <p className="mt-1 text-end"><b>Total for selected dates: </b>${total.toFixed(2)}</p>
+                        <p data-cy="label-price" className="mt-8 text-end"><b>Price per night: </b>${property.price.toFixed(2)}</p>
+                        <p data-cy="label-total-price" className="mt-1 text-end"><b>Total for selected dates: </b>${total.toFixed(2)}</p>
                     </div>
-                    <Button variant="secondary" disabled={!validBooking} onClick={onBook}>{updatingBooking ? 'Update Booking' : 'Book Now'}</Button>
+                    <Button data-cy="submit-book" variant="secondary" disabled={!validBooking} onClick={onBook}>{updatingBooking ? 'Update Booking' : 'Book Now'}</Button>
                 </div>
-                <div className="p-4 col-start-1 col-end-5">
+                <div data-cy="property-description" className="p-4 col-start-1 col-end-5">
                     {property.description}
                 </div>
             </div>
