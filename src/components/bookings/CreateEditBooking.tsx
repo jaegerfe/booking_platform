@@ -97,12 +97,12 @@ export function CreateEditBooking({ property, booking, updatingBooking }: Create
                 </div>
                 <div className="col-start-4 col-end-7 row-start-1 flex flex-col justify-between desktop:mt-40 mobile:rounded-b-lg bg-header-background text-header-color desktop:rounded-lg p-4 desktop:h-80">
                     <div className="mobile:mb-2">
-                        <h2 className="text-xl font-bold mb-4">Reserve now</h2>
+                        <h2 className="text-xl font-bold mb-4">{updatingBooking ? 'Update reservation' : 'Reserve now'}</h2>
                         <Datepicker useRange={false} primaryColor="teal" minDate={new Date()} disabledDates={unavailableDates} placeholder="Select your dates" value={range} onChange={changeRange} showShortcuts={false} />
                         <p className="mt-8 text-end"><b>Price per night: </b>${property.price.toFixed(2)}</p>
                         <p className="mt-1 text-end"><b>Total for selected dates: </b>${total.toFixed(2)}</p>
                     </div>
-                    <Button variant="secondary" disabled={!validBooking} onClick={onBook}>Book Now</Button>
+                    <Button variant="secondary" disabled={!validBooking} onClick={onBook}>{updatingBooking ? 'Update Booking' : 'Book Now'}</Button>
                 </div>
                 <div className="p-4 col-start-1 col-end-5">
                     {property.description}

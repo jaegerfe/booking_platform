@@ -22,5 +22,9 @@ export default defineConfig({
       'moment-range': path.resolve('./node_modules/moment-range/dist/moment-range')
     },
     
+  },
+  server: {
+    host: true,
+    port: 5173
   }
 })
